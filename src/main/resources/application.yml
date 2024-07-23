@@ -1,0 +1,21 @@
+server:
+    port: 8181
+spring:
+    main:
+        allow-bean-definition-overriding: true
+    datasource:
+        url: jdbc:postgresql://localhost:5432/postgres?currentSchema=chat
+        username: postgres
+        password: saad2000
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                # format_sql: false
+        database: postgresql
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+    profiles:
+        active: dev
