@@ -44,6 +44,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private Boolean verifiedEmail;
+    private String image;
     @Enumerated(EnumType.STRING)
     private Role role;
 
