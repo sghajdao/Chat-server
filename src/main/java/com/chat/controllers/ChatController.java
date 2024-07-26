@@ -6,35 +6,24 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import com.chat.dto.MessageRequest;
+import com.chat.entities.Message;
+import com.chat.services.MessageService;
+
 @Controller
 public class ChatController {
-    // @MessageMapping("/hello")
-    // @SendTo("/topic/public")
-    // public Message sendMessage(
-    // @Payload Message message) {
-    // return message;
-    // }
-
-    // @MessageMapping("/chat.addUser")
-    // @SendTo("/topic/public")
-    // public Message addUser(
-    // @Payload Message message,
-    // SimpMessageHeaderAccessor headerAccessor) {
-    // // Add username in web socket session
-    // headerAccessor.getSessionAttributes().put("username", message.getSender());
-    // return message;
-    // }
-
-    private SimpMessagingTemplate template;
-
     @Autowired
-    void WebSocketController(SimpMessagingTemplate template) {
-        this.template = template;
-    }
+    private MessageService messageService;
+    @Autowired
+    private SimpMessagingTemplate template;
 
     @MessageMapping("/hello")
     @SendTo("/topic/public")
-    public void greeting(String message) throws Exception {
-        this.template.convertAndSend("/message", message);
+    public void greeting(MessageRequest request) throws Exception {
+        System.out.println(request.getBody());
+        Message message = messageService.saveMessage(request);
+        this.template.convertAndSend("/message" + request.getSender().toString(), message);
+        this.template.convertAndSend("/message" + request.getReciever().toString(),
+                message);
     }
 }

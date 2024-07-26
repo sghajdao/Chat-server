@@ -2,6 +2,7 @@ package com.chat.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class Message {
     @SequenceGenerator(name = "message_seq", sequenceName = "message_seq", allocationSize = 1)
     private Long id;
 
-    // private MessageType type;
+    @Column(length = 1024)
     private String content;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -35,4 +36,8 @@ public class Message {
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference("receiver-messages")
     private User receiver;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference("conversation-messages")
+    private Conversation conversation;
 }
