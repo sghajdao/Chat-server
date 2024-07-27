@@ -20,7 +20,6 @@ public class ChatController {
     @MessageMapping("/hello")
     @SendTo("/topic/public")
     public void greeting(MessageRequest request) throws Exception {
-        System.out.println(request.getBody());
         Message message = messageService.saveMessage(request);
         this.template.convertAndSend("/message" + request.getSender().toString(), message);
         this.template.convertAndSend("/message" + request.getReciever().toString(),

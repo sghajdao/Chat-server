@@ -30,11 +30,11 @@ public class Message {
     private String content;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference("sender-messages")
+    // @JsonBackReference("sender-messages")
     private User sender;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference("receiver-messages")
+    // @JsonBackReference("receiver-messages")
     private User receiver;
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.chat.config.GrantedAuthorityDeserializer;
 import com.chat.dto.Role;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import jakarta.persistence.CascadeType;
@@ -49,11 +49,11 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference("sender-messages")
+    @JsonIgnore
     private Collection<Message> sendes;
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference("receiver-messages")
+    @JsonIgnore
     private Collection<Message> receives;
 
     @Override
