@@ -32,6 +32,13 @@ public class UserService {
         return null;
     }
 
+    public Collection<User> getContacts(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null)
+            return null;
+        return user.getContacts();
+    }
+
     public List<User> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users;

@@ -13,6 +13,8 @@ import com.chat.repositories.ConversationRepository;
 import com.chat.repositories.MessageRepository;
 import com.chat.repositories.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class MessageService {
     @Autowired
@@ -22,6 +24,7 @@ public class MessageService {
     @Autowired
     private ConversationRepository conversationRepository;
 
+    @Transactional
     public Message saveMessage(MessageRequest request) {
         User s = userRepository.findById(request.getSender()).orElse(null);
         User r = userRepository.findById(request.getReciever()).orElse(null);
@@ -34,6 +37,16 @@ public class MessageService {
                 Conversation conversation = new Conversation();
                 conversation = conversationRepository.save(conversation);
                 message.setConversation(conversation);
+            }
+            if (s.getContacts() == null || !s.getContacts().contains(r)) {
+                s.getContacts().size();
+                s.getContacts().add(r);
+                userRepository.save(s);
+            }
+            if (r.getContacts() == null || !r.getContacts().contains(s)) {
+                r.getContacts().size();
+                r.getContacts().add(s);
+                userRepository.save(r);
             }
             message.setCreatedAt(new Date());
             return messageRepository.save(message);

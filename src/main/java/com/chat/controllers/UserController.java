@@ -1,6 +1,7 @@
 package com.chat.controllers;
 
 import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,11 @@ public class UserController {
         if (res == null)
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/{id}")
+    private ResponseEntity<Collection<User>> getContacts(@PathVariable Long id) {
+        return new ResponseEntity<>(userService.getContacts(id), HttpStatus.OK);
     }
 
     @GetMapping("/all")
