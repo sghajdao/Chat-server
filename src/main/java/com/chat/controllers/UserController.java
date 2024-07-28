@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chat.dto.BlockRequest;
 import com.chat.entities.User;
 import com.chat.services.UserService;
 
@@ -40,5 +41,21 @@ public class UserController {
     @GetMapping("/all")
     private ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+    }
+
+    @PutMapping("/block")
+    private ResponseEntity<User> blockUser(@RequestBody BlockRequest request) {
+        User user = userService.blockUser(request);
+        if (user == null)
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PutMapping("/unblock")
+    private ResponseEntity<User> unblockUser(@RequestBody BlockRequest request) {
+        User user = userService.unblockUser(request);
+        if (user == null)
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

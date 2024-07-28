@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -44,9 +45,11 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private Boolean verifiedEmail;
+    @Column(nullable = true)
     private String image;
     @Enumerated(EnumType.STRING)
     private Role role;
+    private Collection<Long> blackList;
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore

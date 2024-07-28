@@ -1,5 +1,7 @@
 package com.chat.entities;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
@@ -28,6 +30,7 @@ public class Message {
 
     @Column(length = 1024)
     private String content;
+    private Date createdAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     // @JsonBackReference("sender-messages")
