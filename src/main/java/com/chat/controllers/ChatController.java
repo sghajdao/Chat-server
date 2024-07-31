@@ -7,6 +7,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import com.chat.dto.BlockRequest;
+import com.chat.dto.BlockResponse;
 import com.chat.dto.MessageRequest;
 import com.chat.entities.Message;
 import com.chat.entities.User;
@@ -36,6 +37,8 @@ public class ChatController {
     @SendTo("/topic/public")
     public void updateUser(BlockRequest request) throws Exception {
         User user = userRepository.findById(request.getUser()).orElse(null);
-        this.template.convertAndSend("/user" + request.getBlock().toString(), user);
+        User bloked = userRepository.findById(request.getBlock()).orElse(null);
+        BlockResponse response = new BlockResponse(user, bloked);
+        this.template.convertAndSend("/user" + request.getBlock().toString(), response);
     }
 }
