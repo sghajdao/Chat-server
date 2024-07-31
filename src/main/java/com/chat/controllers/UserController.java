@@ -41,7 +41,10 @@ public class UserController {
 
     @GetMapping("/all/{id}")
     private ResponseEntity<Collection<User>> getContacts(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.getContacts(id), HttpStatus.OK);
+        Collection<User> contacts = userService.getContacts(id);
+        if (contacts.isEmpty())
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(contacts, HttpStatus.OK);
     }
 
     @GetMapping("/all")

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chat.dto.BlockRequest;
+import com.chat.dto.ConversationRequest;
 import com.chat.entities.User;
 import com.chat.repositories.UserRepository;
 
@@ -37,6 +38,19 @@ public class UserService {
         if (user == null)
             return null;
         return user.getContacts();
+    }
+
+    public User addContact(ConversationRequest request) {
+        User sender = userRepository.findById(request.getSender()).orElse(null);
+        User receiver = userRepository.findById(request.getReceiver()).orElse(null);
+        if (sender == null || receiver == null)
+            return null;
+        sender.getContacts().size();
+        sender.getContacts().add(receiver);
+        receiver.getContacts().size();
+        receiver.getContacts().add(sender);
+        userRepository.save(receiver);
+        return userRepository.save(sender);
     }
 
     public List<User> getAllUsers() {
