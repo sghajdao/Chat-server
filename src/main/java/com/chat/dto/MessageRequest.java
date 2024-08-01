@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class MessageRequest {
+    private String type;
     private String body;
     private Long sender;
     private Long reciever;

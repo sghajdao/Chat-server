@@ -29,7 +29,8 @@ public class MessageService {
         User s = userRepository.findById(request.getSender()).orElse(null);
         User r = userRepository.findById(request.getReciever()).orElse(null);
         if (r != null && s != null) {
-            Message message = Message.builder().content(request.getBody()).sender(s).receiver(r).build();
+            Message message = Message.builder().type(request.getType()).content(request.getBody()).sender(s).receiver(r)
+                    .build();
             if (request.getConversation() != -1) {
                 Conversation conversation = conversationRepository.findById(request.getConversation()).orElse(null);
                 message.setConversation(conversation);

@@ -28,6 +28,8 @@ public class Message {
     @SequenceGenerator(name = "message_seq", sequenceName = "message_seq", allocationSize = 1)
     private Long id;
 
+    private String type;
+
     @Column(length = 1024)
     private String content;
     private Date createdAt;
