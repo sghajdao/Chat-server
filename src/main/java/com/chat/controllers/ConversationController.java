@@ -1,5 +1,7 @@
 package com.chat.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +36,10 @@ public class ConversationController {
         if (conversation == null)
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(conversation, HttpStatus.OK);
+    }
+
+    @GetMapping("/list/{id}")
+    private ResponseEntity<List<Conversation>> getConversationsByUserId(@PathVariable Long id) {
+        return new ResponseEntity<>(conversationsService.getConversationsByUserId(id), HttpStatus.OK);
     }
 }

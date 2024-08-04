@@ -1,5 +1,7 @@
 package com.chat.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +23,10 @@ public class ConversationsService {
         Conversation conversation = conversationRepository
                 .findConversationBySenderAndReceiver(request.getSender(), request.getReceiver()).orElse(null);
         return conversation;
+    }
+
+    public List<Conversation> getConversationsByUserId(Long id) {
+        List<Conversation> conversations = conversationRepository.findConversationsByUserId(id);
+        return conversations;
     }
 }
