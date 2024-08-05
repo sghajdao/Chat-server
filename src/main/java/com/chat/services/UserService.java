@@ -77,4 +77,12 @@ public class UserService {
         user.setBlackList(list);
         return userRepository.save(user);
     }
+
+    public User verifyEmail(String email) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        if (user == null)
+            return null;
+        user.setVerifiedEmail(true);
+        return userRepository.save(user);
+    }
 }

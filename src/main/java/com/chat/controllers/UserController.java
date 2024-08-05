@@ -67,4 +67,12 @@ public class UserController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @PutMapping("/verify")
+    private ResponseEntity<User> verifyEmail(@RequestBody String email) {
+        User user = userService.verifyEmail(email);
+        if (user == null)
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 }
