@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import com.chat.dto.BlockRequest;
 import com.chat.dto.BlockResponse;
 import com.chat.dto.MessageRequest;
+import com.chat.dto.WritingRequest;
 import com.chat.entities.Message;
 import com.chat.entities.User;
 import com.chat.repositories.UserRepository;
@@ -31,6 +32,15 @@ public class ChatController {
         this.template.convertAndSend("/message" + request.getSender().toString(), message);
         this.template.convertAndSend("/message" + request.getReciever().toString(),
                 message);
+    }
+
+    @MessageMapping("/write")
+    @SendTo("/topic/public")
+    public void writing(WritingRequest request) throws Exception {
+        if (request.getIsWriting() == true)
+            this.template.convertAndSend("/writing" + request.getReceiver().toString(), request);
+        else
+            this.template.convertAndSend("/writing" + request.getReceiver().toString(), request);
     }
 
     @MessageMapping("/block")
